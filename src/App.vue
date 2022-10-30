@@ -25,13 +25,14 @@
             </li>
           </ul>
           <a v-if="is_auth == 0" v-on:click="loadLogin" class="btn btn-secondary">Login</a>
+          <a v-if="is_auth == 1" v-on:click="loadLogout" class="btn btn-danger">Cerrar Sesión</a>
         </div>
       </div>
     </nav>
 
     <br>
     <div>
-      <router-view />
+      <router-view v-on:completedLogin="completedLogin" v-on:loadLogout="loadLogout"></router-view>
     </div>
 
 
@@ -49,7 +50,8 @@ export default {
 
   data: function () {
     return {
-      is_auth: 0
+      is_auth: 0,
+      is_admin: 0
     }
   },
   components: {
@@ -57,8 +59,12 @@ export default {
   },
   methods: {
     verifyAuth: function () {
-      if (this.is_auth == 0)
-        this.$router.push({ name: "login" })
+      this.is_auth = localStorage.getItem('is_auth') || 0;
+      if (this.is_auth == 0) {
+        this.$router.push({ name: "home" })
+      } else {
+        this.$router.push({ name: "home" })
+      }
     },
     loadHome: function () {
       this.$router.push({ name: 'home' });
@@ -66,13 +72,29 @@ export default {
     loadLogin: function () {
       this.$router.push({ name: "login" });
     },
+    loadLogout: function () {
+      let confirmar = confirm("¿Desea cerrar la sesión?")
+      if (confirmar) {
+        localStorage.clear();
+        alert("Sesión Cerrada");
+        this.verifyAuth();
+      }
+    },
     loadAbout: function () {
       this.$router.push({ name: "about" });
+    },
+    completedLogin: function (data) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("cedula", data.cedula);
+      localStorage.setItem("user", data.user);
+      localStorage.setItem('is_auth', 1);
+      this.verifyAuth();
     }
   },
   created: function () {
     document.title = "Pulpas";
     this.$router.push({ name: 'home' })
+    this.verifyAuth();
   }
 }
 
