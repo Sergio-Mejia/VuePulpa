@@ -18,7 +18,7 @@
               <a class="nav-link" v-if="is_auth == 0" v-on:click="loadAbout">Sobre Nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-if="is_auth == 1">Frutas</a>
+              <a class="nav-link" v-if="is_admin == 1">Frutas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" v-if="is_auth == 1">Pedidos</a>
@@ -44,14 +44,15 @@
 
 
 <script>
+import jwt_decode from 'jwt-decode';
 
 export default {
   name: 'App',
-
   data: function () {
     return {
       is_auth: 0,
-      is_admin: 0
+      is_admin: 0,
+      is_customer: 0
     }
   },
   components: {
@@ -60,10 +61,16 @@ export default {
   methods: {
     verifyAuth: function () {
       this.is_auth = localStorage.getItem('is_auth') || 0;
+      this.is_admin = localStorage.getItem('is_admin') || 0;
+      // this.is_customer = localStorage.getItem('is_customer') || 0;
       if (this.is_auth == 0) {
         this.$router.push({ name: "home" })
-      } else {
+      } 
+      else if(this.is_admin == 1){
         this.$router.push({ name: "home" })
+      }
+      else{
+        this.$router.push({ name: "about" })
       }
     },
     loadHome: function () {
@@ -87,6 +94,13 @@ export default {
       localStorage.setItem("token", data.token);
       localStorage.setItem("cedula", data.cedula);
       localStorage.setItem("user", data.user);
+
+      let tokenDecoded = jwt_decode(data.token);
+      if(tokenDecoded.sub.idRol.nombre == 'Admin'){
+        localStorage.setItem('is_admin', 1);
+      }else{
+        localStorage.setItem('is_admin', 0);
+      }
       localStorage.setItem('is_auth', 1);
       this.verifyAuth();
     }
