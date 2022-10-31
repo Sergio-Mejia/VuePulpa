@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" v-if="is_auth == 0" v-on:click="loadHome" href="#">Home</a>
+              <a class="nav-link" aria-current="page" v-on:click="loadHome" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-if="is_auth == 0" v-on:click="loadAbout">Sobre Nosotros</a>
+              <a class="nav-link" v-on:click="loadAbout">Sobre Nosotros</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" v-if="is_admin == 1">Frutas</a>
@@ -24,8 +24,11 @@
               <a class="nav-link" href="#" v-if="is_auth == 1">Pedidos</a>
             </li>
           </ul>
-          <a v-if="is_auth == 0" v-on:click="loadLogin" class="btn btn-secondary">Login</a>
-          <a v-if="is_auth == 1" v-on:click="loadLogout" class="btn btn-danger">Cerrar Sesión</a>
+          <div>
+            <a v-if="is_auth == 0" v-on:click="loadSignup" class="btn btn-success">Registrate</a>
+            <a v-if="is_auth == 0" v-on:click="loadLogin" class="btn btn-secondary">Login</a>
+            <a v-if="is_auth == 1" v-on:click="loadLogout" class="btn btn-danger">Cerrar Sesión</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -78,6 +81,9 @@ export default {
     },
     loadLogin: function () {
       this.$router.push({ name: "login" });
+    },
+    loadSignup: function () {
+      this.$router.push({ name: "signup" });
     },
     loadLogout: function () {
       let confirmar = confirm("¿Desea cerrar la sesión?")

@@ -50,7 +50,7 @@ export default {
             })
             .catch((error) => {
                 if(error.response.status == '401'){
-                    alert('Error. Email o Contraseña incorrectos');
+                    alert('Error. Email o Contraseña incorrectos')
                 }
             });
         }

@@ -4,6 +4,7 @@ import App from './App.vue'
 import home from './components/Home.vue'
 import login from './components/login.vue'
 import about from './components/about.vue'
+import signup from './components/signup.vue'
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: '/about',  
         name: 'about',
         component: about
+    },
+    {
+        path: '/signup',  
+        name: 'signup',
+        component: signup
     },
 ]
 
