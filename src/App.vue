@@ -18,7 +18,7 @@
               <a class="nav-link" v-on:click="loadAbout">Sobre Nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-if="is_admin == 1">Frutas</a>
+              <a class="nav-link" v-on:click="loadFrutas" v-if="is_admin == 1">Frutas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" v-if="is_auth == 1">Pedidos</a>
@@ -70,10 +70,10 @@ export default {
         this.$router.push({ name: "home" })
       } 
       else if(this.is_admin == 1){
-        this.$router.push({ name: "home" })
+        this.$router.push({ name: "fruta" })
       }
       else{
-        this.$router.push({ name: "about" })
+        this.$router.push({ name: "home" })
       }
     },
     loadHome: function () {
@@ -96,12 +96,16 @@ export default {
     loadAbout: function () {
       this.$router.push({ name: "about" });
     },
+    loadFrutas: function () {
+      this.$router.push({ name: "fruta" });
+    },
     completedLogin: function (data) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("cedula", data.cedula);
       localStorage.setItem("user", data.user);
 
       let tokenDecoded = jwt_decode(data.token);
+
       if(tokenDecoded.sub.idRol.nombre == 'Admin'){
         localStorage.setItem('is_admin', 1);
       }else{
