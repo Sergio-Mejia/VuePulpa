@@ -9,7 +9,7 @@ module.exports = defineConfig({
     port:3454,
     proxy: {
       '/V1': {
-        target: 'http://localhost:7777',
+        target: 'http://127.0.0.1:7777',
         changeOrigin: true,
         pathRewrite: {
             '^/V1': ''

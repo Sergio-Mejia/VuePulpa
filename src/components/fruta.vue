@@ -1,5 +1,11 @@
 <template>
-    <table >
+
+    <form action="" v-on:submit.prevent="createFruta">
+        <input type="text" placeholder="Nombre fruta" v-model="fruta.descripcion">
+        <button type="submit">Agregar</button>
+    </form>
+
+    <table v-if="frutas.length > 0">
         <thead>
             <tr>
                 <td>Id</td>
@@ -13,7 +19,7 @@
             </tr>
         </tbody>
     </table>
-    <h2 > No hay frutas registradas</h2>
+    <h2 v-else="frutas == 0"> No hay frutas registradas</h2>
 </template>
 
 
@@ -53,6 +59,27 @@ export default {
                 console.log('Entro a error'); 
                 console.log(error); 
                 this.$emit('loadLogout');
+            })
+        },
+
+        createFruta: async function(){
+            if(localStorage.getItem("token") === null){
+                this.$emit("loadLogout");
+                return;
+            }
+            let token = localStorage.getItem("token");
+            let url = "V1/fruta/create";
+            let frutaData = {
+                "descripcion": this.fruta.descripcion
+            }
+
+            axios.post(url, frutaData, {headers: {"Authorization" : `Bearer ${token}`}}
+            )
+            .then((result) => {
+                alert("Fruta Creada");
+            })
+            .catch((error) => {
+                console.log('Error al crear la fruta: '+error); 
             })
         }
     },
