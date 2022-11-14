@@ -21,7 +21,10 @@
               <a class="nav-link" v-on:click="loadFrutas" v-if="is_admin == 1">Frutas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" v-if="is_auth == 1">Pedidos</a>
+              <a class="nav-link" v-if="is_auth == 1">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" v-on:click="loadConsultas" v-if="is_admin == 1">Consultas</a>
             </li>
           </ul>
           <div>
@@ -70,7 +73,7 @@ export default {
         this.$router.push({ name: "home" })
       } 
       else if(this.is_admin == 1){
-        this.$router.push({ name: "fruta" })
+        this.$router.push({ name: "home" })
       }
       else{
         this.$router.push({ name: "home" })
@@ -98,6 +101,9 @@ export default {
     },
     loadFrutas: function () {
       this.$router.push({ name: "fruta" });
+    },
+    loadConsultas: function () {
+      this.$router.push({ name: "consulta" });
     },
     completedLogin: function (data) {
       localStorage.setItem("token", data.token);

@@ -6,6 +6,7 @@ import login from './components/login.vue'
 import about from './components/about.vue'
 import signup from './components/signup.vue'
 import fruta from './components/fruta.vue'
+import consulta from './components/consultas.vue'
 
 const routes = [
     {
@@ -37,6 +38,11 @@ const routes = [
         path: '/fruta',  
         name: 'fruta',
         component: fruta
+    },
+    {
+        path: '/consulta',  
+        name: 'consulta',
+        component: consulta
     },
 ]
 

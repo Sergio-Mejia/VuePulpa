@@ -5,7 +5,7 @@
         <button type="submit">Agregar</button>
     </form>
 
-    <table v-if="frutas.length > 0">
+    <table>
         <thead>
             <tr>
                 <td>Id</td>
@@ -13,13 +13,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, idx) in frutas">
+            <tr v-for="(item, id) in frutas">
                 <td>{{item.id}}</td>
                 <td>{{item.descripcion}}</td>
             </tr>
         </tbody>
     </table>
-    <h2 v-else="frutas == 0"> No hay frutas registradas</h2>
+    <!-- <h2> No hay frutas registradas</h2> -->
 </template>
 
 
@@ -30,12 +30,10 @@ export default {
     name: 'fruta',
     data: function(){
         return {
-            name:"",
-            descripcion: "",
+            name: "",
             loaded: false,
             frutas: [],
             fruta: {
-                id: 0,
                 descripcion: ""
             }
         }
@@ -47,19 +45,22 @@ export default {
                 return;
             }
             let token = localStorage.getItem("token");
-            axios.get('V1/fruta/get',
-                {headers: {'Authorization': `Bearer ${token}`}})
-                
+            if(token === null){
+            axios.get("V1/fruta/get",
+                {headers: {"Authorization" : `Bearer ${token}`}}
+            )    
             .then((result) => {
                 console.log('Entro a Then'); 
-                this.frutas = result.data.fruta;
+                this.frutas = result.data;
                 this.loaded = true;
             })
             .catch((error) => {
                 console.log('Entro a error'); 
                 console.log(error); 
-                this.$emit('loadLogout');
             })
+        }else{
+            console.log('Nada'); 
+        }
         },
 
         createFruta: async function(){
@@ -72,7 +73,6 @@ export default {
             let frutaData = {
                 "descripcion": this.fruta.descripcion
             }
-
             axios.post(url, frutaData, {headers: {"Authorization" : `Bearer ${token}`}}
             )
             .then((result) => {
@@ -85,8 +85,8 @@ export default {
     },
     created: function(){
         this.$emit('verifyAuth')
-        this.getFrutas();
         document.title = "Fruta";
+        this.getFrutas();
     }
 }
 
