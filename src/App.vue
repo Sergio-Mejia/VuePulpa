@@ -24,7 +24,7 @@
               <a class="nav-link" v-if="is_auth == 1">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-on:click="loadConsultas" v-if="is_admin == 1">Consultas</a>
+              <a class="nav-link" v-on:click="loadConsultas" v-if="is_admin == 1">Ventas</a>
             </li>
           </ul>
           <div>
@@ -37,14 +37,16 @@
     </nav>
 
     <br>
-    <div>
+    <div class="container">
       <router-view v-on:completedLogin="completedLogin" v-on:loadLogout="loadLogout"></router-view>
     </div>
 
 
-    <footer>
-      <p>&copy; Copyright </p>
-    </footer>
+    <div class="container">
+      <footer>
+        <p>&copy; Copyright </p>
+      </footer>
+    </div>
   </div>
 </template>
 

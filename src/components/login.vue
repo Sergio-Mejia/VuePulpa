@@ -2,19 +2,14 @@
     <div class="container">
         <form v-on:submit.prevent="processLogin">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" v-model="user.user" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <label for="InputEmail" class="form-label">Email</label>
+                <input type="email" v-model="user.user" class="form-control" id="InputEmail" aria-describedby="email">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" v-model="user.password" class="form-control" id="exampleInputPassword1">
+                <label for="InputPassword" class="form-label">Password</label>
+                <input type="password" v-model="user.password" class="form-control" id="InputPassword">
             </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success form-control">LogIn</button>
         </form>
     </div>
 </template>

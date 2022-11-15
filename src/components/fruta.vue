@@ -45,22 +45,20 @@ export default {
                 return;
             }
             let token = localStorage.getItem("token");
-            if(token === null){
+            
             axios.get("V1/fruta/get",
                 {headers: {"Authorization" : `Bearer ${token}`}}
             )    
             .then((result) => {
                 console.log('Entro a Then'); 
                 this.frutas = result.data;
+                console.log(`Hola ${this.frutas}`); 
                 this.loaded = true;
             })
             .catch((error) => {
                 console.log('Entro a error'); 
                 console.log(error); 
             })
-        }else{
-            console.log('Nada'); 
-        }
         },
 
         createFruta: async function(){
